@@ -115,7 +115,6 @@ fun main() {
     //instanceof--> java
     // is --> kotlin
 
-
     val intArray :IntArray =intArrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
     for (i in intArray) print("intArray:$i   ")
     println("intArray:${intArray::class.java}")
@@ -128,6 +127,10 @@ fun main() {
     val intList : Array<Int> = arrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
     for (j in intList) print("intList:$j   ")
     println("intList:${intList::class.java}")
+
+    // Creates an Array<String> with values ["0", "1", "4", "9", "16"]
+    val asc = Array(5) { i -> (i * i).toString() }
+    asc.forEach { println(it) }
 
     //int[3][4]
     val ab = Array(3) { IntArray(4) }
