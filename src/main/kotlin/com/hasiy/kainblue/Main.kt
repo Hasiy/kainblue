@@ -1,11 +1,11 @@
 package com.hasiy.kainblue
 
 import com.alibaba.fastjson.JSONObject
+import com.sun.xml.internal.fastinfoset.util.StringArray
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.stream.IntStream
 import java.util.Arrays
-
 
 
 fun <A, B, C> compose(f: (B) -> C, g: (A) -> B): (A) -> C {
@@ -23,7 +23,7 @@ fun main() {
 
     val sum = IntStream.range(0, 1000).parallel().map { n -> n * n }.sum()
     System.out.println("sum=$sum")
-    System.out.println("sum=${sum::class}")
+    System.out.println("sum=${sum::class.java}")
 
     val nonNulls: List<String> = listOfNotNull(null, "a", "b", "c")
     (nonNulls as ArrayList).addAll(arrayOf("x", "y"))
@@ -52,21 +52,33 @@ fun main() {
     println("Date():${Date()}")
     val date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date())
     println("date:$date")
-    println("date:${date::class}")
+    println("date:${date::class.java}")
 
     // 1 .. 10
     val num = 1.rangeTo(10)
     println("num$num")
-    println("num${num::class}")
+    println("num${num::class.java}")
 
-    val num1 =1..10
+    val num1 = 1..10
     println("num1$num1")
     // 遍历 1 到 10, 包括 1 和 10.
     // num.contains(index) --> java
     // index in num
     for (index in num) {
-        println("index:$index")
+        print("index:$index  ")
     }
+    println()
+
+
+    for (x in 0..66 step 2) {
+        print("$x  ")
+    }
+    println()
+    for (x in 66 downTo 0 step 3) {
+        print("$x  ")
+    }
+    println()
+
 
     val calendar = Calendar.getInstance() // 代表今天.
     println("calendar$calendar")
@@ -119,22 +131,100 @@ fun main() {
     for (i in intArray) print("intArray:$i   ")
     println("intArray:${intArray::class.java}")
 
-    // [1,1,1]
-    val asc1:Array<Int> = Array(3) { 1}
-    for (z in asc1) print("asc1:$z   ")
-    println()
+    val charArray: CharArray = charArrayOf('1', '2', '3')
+    for (i in charArray) print("charArray:$i   ")
+    println("charArray:${charArray::class.java}")
 
-    val intList : Array<Int> = arrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-    for (j in intList) print("intList:$j   ")
-    println("intList:${intList::class.java}")
+    // [1,1,1]
+    val asc1: Array<Int> = Array(3) { 1 }
+    for (z in asc1) print("asc1:$z   ")
+    println("asc1:${asc1::class.java}")
+
+    val arrayInt: Array<Int> = arrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    for (j in arrayInt) print("intList:$j   ")
+    println("intList:${arrayInt::class.java}")
 
     // Creates an Array<String> with values ["0", "1", "4", "9", "16"]
     val asc = Array(5) { i -> (i * i).toString() }
     asc.forEach { println(it) }
 
     //int[3][4]
-    val ab = Array(3) { IntArray(4) }
+    val ab: Array<IntArray> = Array(3) { IntArray(4) }
+    println("ab:${ab::class.java}")
+
+
+
+    fun judgmentType(x: Any) {
+        when (x) {
+            is Int -> println(x + 1)
+            is String -> println(x.length + 1)
+            is IntArray -> println(x.sum())
+        }
+        println("x${x::class.java}")
+    }
+
+    judgmentType(10)
+    judgmentType("10")
+    judgmentType(intArray)
+
+    val str = "10"
+    println("str${str.toInt()}")
+    println("str${str.toInt(2)}")  // todo radix 是啥意思
+    println("str${str.toIntOrNull()}")
+    println("str${str.toIntOrNull(16)}")
+
+    fun getStringLength(obj: Any) {
+        if (obj is String) {
+            println("obj.length:${obj::class.java}")
+            println("obj.length:${obj.length}")
+        }
+        println("obj.length:${obj::class.java}")
+    }
+
+    getStringLength(1)
+    getStringLength("we")
+
+    val array: Array<Int> = arrayOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+//    for 循环可以对任何提供迭代器（iterator）的对象进行遍历
+    for (i in array.indices) {
+        print("array[$i]${array[i]}  ")
+    }
+    println()
+
+    var x = 10
+    while (x > 0) {
+        --x
+        print("x$x  ")
+    }
+    println()
+
+    var y = 0
+    do {
+        ++y
+        print("y$y  ")
+    } while (y < 10) // y的作用域包含此处
+    println()
+
+    val items = listOf("apple", "banana", "kiwifruit")
+    for (item in items) {
+        print("$item   ")
+    }
+    println()
+
+
+    val item = setOf("apple", "banana", "kiwifruit")
+    when {
+        "orange" in item -> println("juicy")
+        "apple" in item -> println("apple is fine too")
+    }
+
+    // 使用 lambda 表达式来过滤（filter）与映射（map）集合：
+    val fruits = listOf("banana", "avocado", "apple", "kiwifruit")
+    fruits
+        .filter { it.startsWith("a") }
+        .sortedBy { it }
+        .map { it.toUpperCase() }
+        .forEach { println(it) }
+
 
 }
-
-
