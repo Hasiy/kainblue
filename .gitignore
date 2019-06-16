@@ -65,3 +65,4 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 .idea/
 out/production/classes/META-INF/kainblue.main.kotlin_module
+out/production/classes/META-INF/kainblue.kotlin_module

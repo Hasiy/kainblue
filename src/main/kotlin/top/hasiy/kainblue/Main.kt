@@ -1,11 +1,11 @@
-package com.hasiy.kainblue
+package top.hasiy.kainblue
 
 import com.alibaba.fastjson.JSONObject
-import com.sun.xml.internal.fastinfoset.util.StringArray
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.stream.IntStream
-import java.util.Arrays
+import kotlin.reflect.KProperty
 
 
 fun <A, B, C> compose(f: (B) -> C, g: (A) -> B): (A) -> C {
@@ -14,6 +14,7 @@ fun <A, B, C> compose(f: (B) -> C, g: (A) -> B): (A) -> C {
 
 fun isOdd(x: Int) = x % 2 != 0
 fun length(s: String) = s.length
+
 fun main() {
 
     val oddLength = compose(::isOdd, ::length)
@@ -54,7 +55,7 @@ fun main() {
     println("date:$date")
     println("date:${date::class.java}")
 
-    // 1 .. 10
+    // 1 .. 10  包括 1 和 10
     val num = 1.rangeTo(10)
     println("num$num")
     println("num${num::class.java}")
@@ -127,7 +128,7 @@ fun main() {
     //instanceof--> java
     // is --> kotlin
 
-    val intArray :IntArray =intArrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    val intArray: IntArray = intArrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
     for (i in intArray) print("intArray:$i   ")
     println("intArray:${intArray::class.java}")
 
@@ -211,7 +212,6 @@ fun main() {
     }
     println()
 
-
     val item = setOf("apple", "banana", "kiwifruit")
     when {
         "orange" in item -> println("juicy")
@@ -226,5 +226,43 @@ fun main() {
         .map { it.toUpperCase() }
         .forEach { println(it) }
 
+    var a1 = 1
+    val s1 = "a is $a1"
+    a1 = 2
+    //  is 替换成 was
+    val s2 = "${s1.replace("is", "was")}, but now is $a1"
+    println(s2)
 
+    //过滤 list
+    val list = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    val positives1 = list.filter { z -> z > 0 }
+    println("positives1:$positives1")
+    val positives2 = list.filter { it > 6 }
+    println("positives2:$positives2")
+
+    //遍历 map/pair型list
+    for ((k, v) in map) {
+        println("$k -> $v")
+    }
+
+    println("单例：${Resource.name}")
+
+    //交换两个变量
+    var z = 1
+    var v = 2
+    z = v.also { v = z }
+    println(z)
+    println(v)
+
+    val object1 = SingleObject.instance
+    object1.showMessage()
+
+    val object2 = SingleObjectJava.getInstance()
+    object2.showMessage()
+
+}
+
+//单例
+object Resource {
+    const val name = "Name"
 }
