@@ -66,3 +66,5 @@ gradle-app.setting
 .idea/
 out/production/classes/META-INF/kainblue.main.kotlin_module
 out/production/classes/META-INF/kainblue.kotlin_module
+.project
+.settings/org.eclipse.buildship.core.prefs
