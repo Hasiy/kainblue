@@ -4,12 +4,29 @@ plugins {
 }
 
 group 'top.hasiy.kainblue'
-version '1.0-SNAPSHOT'
+version '1.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
 
 sourceCompatibility = 1.8
 
+sourceSets {
+    main.kotlin.srcDirs += 'src/main/kotlin'
+    main.java.srcDirs += 'src/main/java'
+    main.java.srcDirs += 'src/main/kotlin'
+}
+
 repositories {
     mavenCentral()
+    google()
+    jcenter()
+}
+
+configurations {
+    ktlint
 }
 
 dependencies {
@@ -17,6 +34,8 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     implementation 'com.alibaba:fastjson:1.2.57'
     implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.16'
+    ktlint "com.pinterest:ktlint:0.35.0"
 }
 
 compileKotlin {
@@ -27,11 +46,24 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-sourceSets {
-    main.kotlin.srcDirs += 'src/main/kotlin'
-    main.java.srcDirs += 'src/main/java'
-}
-
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
+}
+
+task ktlint(type: JavaExec, group: "verification") {
+    description = "Check Kotlin code style."
+    classpath = configurations.ktlint
+    main = "com.github.shyiko.ktlint.Main"
+    args "src/**/*.kt"
+//     to generate report in checkstyle format prepend following args:
+//     "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/ktlint.xml"
+    // see https://github.com/shyiko/ktlint#usage for more
+}
+check.dependsOn ktlint
+
+task ktlintFormat(type: JavaExec, group: "formatting") {
+    description = "Fix Kotlin code style deviations."
+    classpath = configurations.ktlint
+    main = "com.github.shyiko.ktlint.Main"
+    args "-F", "src/**/*.kt"
 }

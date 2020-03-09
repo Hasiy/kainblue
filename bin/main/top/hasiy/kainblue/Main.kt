@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.stream.Collectors
 import java.util.stream.IntStream
 import kotlin.reflect.KProperty
 
@@ -23,8 +24,8 @@ fun main() {
     println("result:$result")
 
     val sum = IntStream.range(0, 1000).parallel().map { n -> n * n }.sum()
-    System.out.println("sum=$sum")
-    System.out.println("sum=${sum::class.java}")
+    println("sum=$sum")
+    println("sum=${sum::class.java}")
 
     val nonNulls: List<String> = listOfNotNull(null, "a", "b", "c")
     (nonNulls as ArrayList).addAll(arrayOf("x", "y"))
@@ -34,12 +35,14 @@ fun main() {
     val map = mapOf("a" to 1, "b" to 2, "c" to 3)
     println("map:$map")
 
+    // 有序的hashMap
     val linkedHashMap: LinkedHashMap<String, String> =
         linkedMapOf("red" to "#FF0000", "azure" to "#F0FFFF", "white" to "#FFFFFF")
     println("linkedHashMap:$linkedHashMap")
 
+    //由Map 扩展的有序Map  (子 NavigableMap  TreeMap
     val sortedMap: SortedMap<Int, String> = sortedMapOf(4 to "d", 1 to "a", 3 to "c", 2 to "b")
-    println("sortedMap::$sortedMap")
+    println("sortedMap:$sortedMap")
 
     val jsonObject = JSONObject()
     jsonObject["name"] = "name"
@@ -153,6 +156,11 @@ fun main() {
     val ab: Array<IntArray> = Array(3) { IntArray(4) }
     println("ab:${ab::class.java}")
 
+    val arr1 = arrayOf("1", 2, 3, 4)
+    arr1.reverse() //反转元素
+    arr1.forEach {
+        println("反转元素 it:$it")
+    }
 
 
     fun judgmentType(x: Any) {
@@ -257,12 +265,202 @@ fun main() {
     val object1 = SingleObject.instance
     object1.showMessage()
 
-    val object2 = SingleObjectJava.getInstance()
-    object2.showMessage()
+//    val object2 = SingleObjectJava.getInstance()
+//    object2.showMessage()
 
+    val persons = arrayListOf<Person>()
+    val ids = ArrayList<Int>()//用来临时存储person的id
+
+    persons.add(Person(1, "name1", 10))
+    persons.add(Person(2, "name1", 11))
+    persons.add(Person(3, "name1", 14))
+    persons.add(Person(3, "name1", 12))
+    persons.add(Person(4, "name1", 14))
+    persons.add(Person(5, "name1", 13))
+
+    // stream 流数据去重
+    val personList = persons.stream().filter {
+        val flag = !ids.contains(it.id)
+        ids.add(it.id)
+        flag
+    }.collect(Collectors.toList<Person>())
+    println(personList)
+
+
+    // 这里举例一个语言自带的一个高阶函数filter,此函数的作用是过滤掉不满足条件的值。
+    val arr = arrayOf(1, 3, 5, 7, 9)
+    // 过滤掉数组中元素小于2的元素，取其第一个打印。这里的it就表示每一个元素。
+    println("element:" + arr.filter { it < 5 }.component1())
+
+    arr.filter { it < 5 }.component1().apply {
+        println("element:$this")
+    }
+
+
+    // 注意：Any是kotlin中的超类，故而Student类也是继承自Any的。这里你可以换成Person类结果是相同的
+    val listPerson: List<Any>
+    val listStudent: List<Student> =
+        listOf(Student(0, "张三", 12, "一班"), Student(1, "王五", 20, "二班"), Student(2, "桃子", 18, "三班"))
+    listPerson = listStudent // 协变
+
+    listPerson.forEach { println(it.toString()) }
+
+    val testStr = "abc"
+    val sum1 = testStr.sumBy { it.toInt() }
+    // sumBy函数的源码  把字符串中的每一个字符转换为Int的值，用于累加，最后返回累加的值
+    println(sum1)
+    println(testStr.plus(personList.toString()))
+
+    testDemo()
+
+    //Java中，所有的控制结构都是语句，也就是控制结构都没有值
+    // kotlin里除了循环（for、do和do/while）以外，大多数控制结构都是表达式(if/when等)
+    // 表达式有值，并且能作为另一个表达式的一部分使用
+    // 语句总是包围着它的代码块中的顶层元素，并且没有自己的值
+
+    // 等同Java的三元运算符 a > b ? a : b;
+    fun max1(a: Int, b: Int): Int {
+        return if (a > b) a else b
+    }
+
+    fun max2(a: Int, b: Int) = if (a > b) a else b
+
+
+    fun <T> joinToString(
+        collection: Collection<T>,
+        separator: String = ", ",
+        prefix: String = "",
+        postfix: String = ""
+    ): String {
+        val result = StringBuilder(prefix)
+        for ((index, element) in collection.withIndex()) {
+            if (index > 0) result.append(separator)
+            result.append(element)
+        }
+        result.append(postfix)
+        return result.toString()
+    }
+    println(joinToString(list, " - "))
+    println(joinToString(list, " , ", "["))
+
+    /*
+    * 用扩展函数改造Tip3中的列表打印内容函数
+    * */
+    fun <T> Collection<T>.joinToString3(
+        separator: String = ", ",
+        prefix: String = "",
+        postfix: String = ""
+    ): String {
+        val result1 = StringBuilder(prefix)
+        for ((index, element) in withIndex()) {
+            if (index > 0) result1.append(separator)
+            result1.append(element)
+        }
+        result1.append(postfix)
+        return result1.toString()
+    }
+
+    val list4 = listOf(2, 4, 0)
+    println(list4.joinToString3("/"))
+
+
+    val str11 = "test extension fun"
+    println(str11.lastChar())
+    println(str11.lastChar)
+
+    val stringBuilder = StringBuilder("abc")
+    println(stringBuilder.lastChar)
 }
+
+/*
+* 通过with语句，将result参数作为参数，在内部this也可以省略掉
+* */
+fun alphabet(): String {
+    val result = StringBuilder()
+    return with(result) {
+        append("START\n")
+        for (letter in 'A'..'Z') {
+            append(letter)
+        }
+        append("\nEND")
+        toString()
+    }
+}
+
+
+fun alphabet2(): String {
+    return with(StringBuilder()) {
+        append("START\n")
+        for (letter in 'A'..'Z') {
+            append(letter)
+        }
+        append("\nEND")
+        toString()
+    }
+}
+
+
+/*
+ * 扩展函数
+ * */
+fun String.lastChar(): Char = this[this.length - 1]
+
+/*
+* 扩展属性 lastChar获取String的最后一个字符
+* */
+val String.lastChar: Char
+    get() = get(length - 1)
+/*
+* 扩展属性 lastChar获取StringBuilder的最后一个字符
+* */
+var StringBuilder.lastChar: Char
+    get() = get(length - 1)
+    set(value: Char) {
+        setCharAt(length - 1, value)
+    }
 
 //单例
 object Resource {
     const val name = "Name"
+}
+
+
+public fun <T> Collection<T>.toMutableList(): MutableList<T> {
+    return ArrayList(this)
+}
+
+
+private fun resultByOpt(num1: Int, num2: Int, result: (Int, Int) -> Int): Int {
+    return result(num1, num2)
+}
+
+
+private fun testDemo() {
+    //根据传入不同的Lambda表达式，实现了两个数的+、-、*、/
+    val result1 = resultByOpt(1, 2) { num1, num2 ->
+        num1 + num2
+    }
+
+    val result2 = resultByOpt(3, 4) { num1, num2 ->
+        num1 - num2
+    }
+
+    val result3 = resultByOpt(5, 6) { num1, num2 ->
+        num1 * num2
+    }
+
+    val result4 = resultByOpt(6, 3) { num1, num2 ->
+        num1 / num2
+    }
+
+    val result5 = resultByOpt(12, 18) { num1, num2 ->
+        (num1 % num2) * (num1 + num2)
+    }
+
+
+    println("result1 + = $result1")
+    println("result2 - = $result2")
+    println("result3 * = $result3")
+    println("result4 / = $result4")
+    println("result5 ？ = $result5")
 }

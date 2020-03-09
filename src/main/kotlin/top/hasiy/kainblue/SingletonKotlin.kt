@@ -3,15 +3,15 @@ package top.hasiy.kainblue
 
 /*
  * @Author: hasiy
- * @Date: 2019/6/19 - 09 : 28 
+ * @Date: 2019/6/19 - 09 : 28
  * @LastEditors: zhuxiaoyao
- * @LastEditTime: 2019/6/19 - 09 : 28 
+ * @LastEditTime: 2019-09-11 10:15:47
  * @Description: kainblue
  * @Email: hasiy.jj@gmail.com
  */
 
 object SingletonKotlin {
-    @Volatile
+    @Volatile  //添加关键字volatile 防止JVM编译器的指令重排
     private var instance: SingletonKotlin? = null  //单例对象
 
     //静态工厂方法

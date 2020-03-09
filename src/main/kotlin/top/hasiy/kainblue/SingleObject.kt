@@ -1,6 +1,6 @@
 package top.hasiy.kainblue
 
-class SingleObject//让构造函数为 private，这样该类就不会被实例化
+class SingleObject// 让构造函数为 private，这样该类就不会被实例化
 private constructor() {
 
     fun showMessage() {
@@ -9,7 +9,7 @@ private constructor() {
 
     companion object {
         //创建 SingleObject 的一个对象
-        //获取唯一可用的对象
+        //  获取唯一可用的对象
         val instance = SingleObject()
     }
 }
