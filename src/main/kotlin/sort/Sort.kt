@@ -61,7 +61,7 @@ fun <T : Comparable<T>> Iterable<T>.selectSorted(): MutableList<T> {
     }
 }
 
-// 希尔排序
+// 希尔
 fun <T : Comparable<T>> Iterable<T>.shellSorted(): MutableList<T> {
     return toMutableList().apply {
         var dk = (size - 1) / 2
