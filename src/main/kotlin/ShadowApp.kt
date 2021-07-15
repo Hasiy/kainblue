@@ -1,8 +1,6 @@
-package com.leqi.institute.view.activity
 
 object ShadowApp {
-    internal var x: Int = 0
-    @JvmStatic
+    private var x: Int = 0
     fun main(args: Array<String>) {
         x = 5
         println("x = $x")

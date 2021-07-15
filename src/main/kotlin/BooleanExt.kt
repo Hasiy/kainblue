@@ -1,5 +1,8 @@
 package top.hasiy.kainblue
 
+import otherwise
+import yes
+
 
 /**
  * @Author: hasiy

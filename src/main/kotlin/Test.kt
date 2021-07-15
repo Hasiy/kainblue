@@ -1,0 +1,101 @@
+import com.google.gson.Gson
+import kotlinx.coroutines.channels.sendBlocking
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.runBlocking
+import java.util.*
+
+fun main() = runBlocking {
+
+    val resourceList: List<DynamicResourceBean> = listOf(
+        DynamicResourceBean("123", "321", 1, 100, 100, "1", "mp4", 0),
+        DynamicResourceBean("234", "432", 0, 140, 180, "12", "jpeg", 1),
+        DynamicResourceBean("345", "543", 0, 200, 300, "123", "", 2)
+    )
+
+    val prepareList: MutableList<DynamicResourceBean> = mutableListOf()
+    resourceList.asFlow()
+        .map {
+
+    }.onEach {
+        val ext = when (it.ext == "") {
+            true -> "JPG"
+            false -> it.ext
+        }
+        val currTime = System.currentTimeMillis()
+        val randomsInt = (currTime / Random(100).nextInt(100) and 0x1FFFF).toInt()
+        val fileName = String.format("id_${currTime}_${randomsInt}.$ext")
+        it.name = fileName //上传名字 非源文件名
+        it.ext = ext
+    }.catch {
+        println("error:${this}")
+    }.onStart {
+        println("onStart")
+    }.onCompletion {
+        println("Done")
+        prepareList.forEach {
+            println("prepare:${Gson().toJson(it)}")
+        }
+//            this.emitAll(channelFlow {
+//                awaitClose {
+//                    println("Done:awaitClose")
+//                }
+//            })
+    }.collect() {
+        prepareList.add(it)
+        println("collect:${Gson().toJson(it)}")
+    }
+
+    channelFlow<Int> {
+        offer(1)
+        send(2)
+        sendBlocking(3)
+//        select {
+//
+//        }
+    }.onCompletion {
+        println("Done1")
+    }
+//        .flowOn(Dispatchers.Default)
+//        .onCompletion {
+//            println("Done2")
+//        }
+        .collectIndexed { index, value ->
+            println("index:$index,val:$value")
+        }
+
+    val consumer1 = produce<Int> {
+
+    }
+//    val producerScope = ProducerScope<Int> {
+//
+//    }
+}
+
+
+class DynamicResourceBean(
+    var thumbnail_url: String = "", // 缩略图
+    var resource_url: String = "", // 原图地址
+    var resource_type: Int = 0, // 动态类型 0图片，1视频
+    var width: Int = 0,
+    var height: Int = 0,
+    var name: String? = null,  //上传名字 非源文件名
+    var ext: String? = null,   // 扩展名
+    var id: Int = 0 //
+)
+
+internal fun getIncline(v: Byte): Int {
+    val value = unsignedByte(v)
+    //坡度最小值（可能为负，用第一个bit表示正负，0为正，1为负）
+    return if (value and 0x80 > 0) {
+        // 1xxx  负
+        (128 - value)
+    } else {
+        // 0xxx 正
+        value
+    }
+}
+
+fun unsignedByte(signedByte: Byte) = if (signedByte >= 0) signedByte.toInt() else signedByte.toInt() + 256
+
+
+

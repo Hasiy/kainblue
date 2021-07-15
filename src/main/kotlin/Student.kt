@@ -1,5 +1,4 @@
-package top.hasiy.kainblue
-
+import com.google.gson.annotations.Expose
 
 /*
  * @Author: hasiy

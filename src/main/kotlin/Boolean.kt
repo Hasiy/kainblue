@@ -1,8 +1,3 @@
-package top.hasiy.kainblue
-
-import kotlin.properties.Delegates
-
-
 /**
  * @Author: hasiy
  * @Date: 2019/11/19 - 10 : 10

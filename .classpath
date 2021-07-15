@@ -3,37 +3,37 @@
 	<classpathentry kind="src" output="bin/main" path="src/main/java">
 		<attributes>
 			<attribute name="gradle_scope" value="main"/>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
+			<attribute name="gradle_used_by_scope" value="main,Test"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" output="bin/main" path="src/main/kotlin">
 		<attributes>
 			<attribute name="gradle_scope" value="main"/>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
+			<attribute name="gradle_used_by_scope" value="main,Test"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" output="bin/main" path="src/main/resources">
 		<attributes>
 			<attribute name="gradle_scope" value="main"/>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
+			<attribute name="gradle_used_by_scope" value="main,Test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" output="bin/test" path="src/test/java">
+	<classpathentry kind="src" output="bin/Test" path="src/Test/java">
 		<attributes>
-			<attribute name="gradle_scope" value="test"/>
-			<attribute name="gradle_used_by_scope" value="test"/>
+			<attribute name="gradle_scope" value="Test"/>
+			<attribute name="gradle_used_by_scope" value="Test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" output="bin/test" path="src/test/kotlin">
+	<classpathentry kind="src" output="bin/Test" path="src/Test/kotlin">
 		<attributes>
-			<attribute name="gradle_scope" value="test"/>
-			<attribute name="gradle_used_by_scope" value="test"/>
+			<attribute name="gradle_scope" value="Test"/>
+			<attribute name="gradle_used_by_scope" value="Test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" output="bin/test" path="src/test/resources">
+	<classpathentry kind="src" output="bin/Test" path="src/Test/resources">
 		<attributes>
-			<attribute name="gradle_scope" value="test"/>
-			<attribute name="gradle_used_by_scope" value="test"/>
+			<attribute name="gradle_scope" value="Test"/>
+			<attribute name="gradle_used_by_scope" value="Test"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8/"/>

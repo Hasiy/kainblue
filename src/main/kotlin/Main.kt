@@ -1,12 +1,9 @@
-package top.hasiy.kainblue
-
 import com.alibaba.fastjson.JSONObject
-import java.io.File
+import com.google.gson.Gson
+import top.hasiy.kainblue.SingleObject
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.stream.Collectors
-import java.util.stream.IntStream
-import kotlin.reflect.KProperty
 
 
 fun <A, B, C> compose(f: (B) -> C, g: (A) -> B): (A) -> C {
@@ -23,9 +20,9 @@ fun main() {
     val result = strings.filter(oddLength)
     println("result:$result")
 
-    val sum = IntStream.range(0, 1000).parallel().map { n -> n * n }.sum()
-    println("sum=$sum")
-    println("sum=${sum::class.java}")
+//    val sum = range(0, 1000).parallel().map { n -> n * n }.sum()
+//    println("sum=$sum")
+//    println("sum=${sum::class.java}")
 
     val nonNulls: List<String> = listOfNotNull(null, "a", "b", "c")
     (nonNulls as ArrayList).addAll(arrayOf("x", "y"))
@@ -37,7 +34,7 @@ fun main() {
 
     // 有序的hashMap
     val linkedHashMap: LinkedHashMap<String, String> =
-        linkedMapOf("red" to "#FF0000", "azure" to "#F0FFFF", "white" to "#FFFFFF")
+            linkedMapOf("red" to "#FF0000", "azure" to "#F0FFFF", "white" to "#FFFFFF")
     println("linkedHashMap:$linkedHashMap")
 
     //由Map 扩展的有序Map  (子 NavigableMap  TreeMap
@@ -126,7 +123,7 @@ fun main() {
     a.shl(b) //a<<b
     a.shr(b) //a>>b
     a.ushr(b) //a>>>b
-
+    // 协程
     //用于检查对象是否是某个类的实例。
     //instanceof--> java
     // is --> kotlin
@@ -229,10 +226,10 @@ fun main() {
     // 使用 lambda 表达式来过滤（filter）与映射（map）集合：
     val fruits = listOf("banana", "avocado", "apple", "kiwifruit")
     fruits
-        .filter { it.startsWith("a") }
-        .sortedBy { it }
-        .map { it.toUpperCase() }
-        .forEach { println(it) }
+            .filter { it.startsWith("a") }
+            .sortedBy { it }
+            .map { it.toUpperCase() }
+            .forEach { println(it) }
 
     var a1 = 1
     val s1 = "a is $a1"
@@ -300,7 +297,7 @@ fun main() {
     // 注意：Any是kotlin中的超类，故而Student类也是继承自Any的。这里你可以换成Person类结果是相同的
     val listPerson: List<Any>
     val listStudent: List<Student> =
-        listOf(Student(0, "张三", 12, "一班"), Student(1, "王五", 20, "二班"), Student(2, "桃子", 18, "三班"))
+            listOf(Student(0, "张三", 12, "一班"), Student(1, "王五", 20, "二班"), Student(2, "桃子", 18, "三班"))
     listPerson = listStudent // 协变
 
     listPerson.forEach { println(it.toString()) }
@@ -327,10 +324,10 @@ fun main() {
 
 
     fun <T> joinToString(
-        collection: Collection<T>,
-        separator: String = ", ",
-        prefix: String = "",
-        postfix: String = ""
+            collection: Collection<T>,
+            separator: String = ", ",
+            prefix: String = "",
+            postfix: String = ""
     ): String {
         val result = StringBuilder(prefix)
         for ((index, element) in collection.withIndex()) {
@@ -347,9 +344,9 @@ fun main() {
     * 用扩展函数改造Tip3中的列表打印内容函数
     * */
     fun <T> Collection<T>.joinToString3(
-        separator: String = ", ",
-        prefix: String = "",
-        postfix: String = ""
+            separator: String = ", ",
+            prefix: String = "",
+            postfix: String = ""
     ): String {
         val result1 = StringBuilder(prefix)
         for ((index, element) in withIndex()) {
@@ -370,6 +367,13 @@ fun main() {
 
     val stringBuilder = StringBuilder("abc")
     println(stringBuilder.lastChar)
+
+    val record = listOf<Double>()
+    abbreviatedData(record)
+    val csv = Gson().toJson(record)
+    println()
+    println("csv:$csv")
+
 }
 
 /*
@@ -410,6 +414,7 @@ fun String.lastChar(): Char = this[this.length - 1]
 * */
 val String.lastChar: Char
     get() = get(length - 1)
+
 /*
 * 扩展属性 lastChar获取StringBuilder的最后一个字符
 * */
