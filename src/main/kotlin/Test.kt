@@ -14,36 +14,34 @@ fun main() = runBlocking {
 
     val prepareList: MutableList<DynamicResourceBean> = mutableListOf()
     resourceList.asFlow()
-        .map {
-
-    }.onEach {
-        val ext = when (it.ext == "") {
-            true -> "JPG"
-            false -> it.ext
-        }
-        val currTime = System.currentTimeMillis()
-        val randomsInt = (currTime / Random(100).nextInt(100) and 0x1FFFF).toInt()
-        val fileName = String.format("id_${currTime}_${randomsInt}.$ext")
-        it.name = fileName //上传名字 非源文件名
-        it.ext = ext
-    }.catch {
-        println("error:${this}")
-    }.onStart {
-        println("onStart")
-    }.onCompletion {
-        println("Done")
-        prepareList.forEach {
-            println("prepare:${Gson().toJson(it)}")
-        }
+        .onEach {
+            val ext = when (it.ext == "") {
+                true -> "JPG"
+                false -> it.ext
+            }
+            val currTime = System.currentTimeMillis()
+            val randomsInt = (currTime / Random(100).nextInt(100) and 0x1FFFF).toInt()
+            val fileName = String.format("id_${currTime}_${randomsInt}.$ext")
+            it.name = fileName //上传名字 非源文件名
+            it.ext = ext
+        }.catch {
+            println("error:${this}")
+        }.onStart {
+            println("onStart")
+        }.onCompletion {
+            println("Done")
+            prepareList.forEach {
+                println("prepare:${Gson().toJson(it)}")
+            }
 //            this.emitAll(channelFlow {
 //                awaitClose {
 //                    println("Done:awaitClose")
 //                }
 //            })
-    }.collect() {
-        prepareList.add(it)
-        println("collect:${Gson().toJson(it)}")
-    }
+        }.collect() {
+            prepareList.add(it)
+            println("collect:${Gson().toJson(it)}")
+        }
 
     channelFlow<Int> {
         offer(1)
