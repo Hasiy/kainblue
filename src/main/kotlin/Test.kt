@@ -1,7 +1,12 @@
 import com.google.gson.Gson
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.channels.actor
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.selects.select
 import java.util.*
 
 fun main() = runBlocking {
@@ -43,20 +48,61 @@ fun main() = runBlocking {
             println("collect:${Gson().toJson(it)}")
         }
 
-    channelFlow<Int> {
+    val channel = channelFlow {
+        for (i in 0..10) {
+            send(i)
+//            trySend(i)
+//            trySendBlocking(i)
+        }
+        actor<Int> {
+
+        }
+        async {
+
+        }
+        awaitClose {
+
+        }
+        select {
+            onTimeout(100) {
+                println("timeOut")
+            }
+        }
+    }.flowOn(Dispatchers.Default)
+        .onEach {
+            println("onEach:$it")
+        }.onStart {
+            println("start")
+        }.onCompletion {
+            println("done")
+        }.onEmpty {
+            println("onEmpty")
+        }.catch {
+            println("catch")
+        }.collectIndexed { index, value ->
+            println("index:$index value:$value ")
+            //.collect() {
+            //    }
+        }
+
+    channel.runCatching {
+
+    }
+
+    callbackFlow<Int> {
         offer(1)
         send(2)
         sendBlocking(3)
 //        select {
-//
 //        }
+        awaitClose {
+
+        }
+
     }.onCompletion {
         println("Done1")
     }
 //        .flowOn(Dispatchers.Default)
-//        .onCompletion {
-//            println("Done2")
-//        }
         .collectIndexed { index, value ->
             println("index:$index,val:$value")
         }
@@ -64,6 +110,11 @@ fun main() = runBlocking {
     val consumer1 = produce<Int> {
 
     }
+
+    val a = actor<Int> {
+
+    }
+
 //    val producerScope = ProducerScope<Int> {
 //
 //    }
