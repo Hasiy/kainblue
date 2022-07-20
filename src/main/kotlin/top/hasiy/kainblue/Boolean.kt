@@ -1,7 +1,5 @@
 package top.hasiy.kainblue
 
-import kotlin.properties.Delegates
-
 
 /**
  * @Author: hasiy
@@ -43,4 +41,39 @@ fun main(args: Array<String>) {
     }.otherwise {
         println("false")
     }
+
+    val object1 = Loock.get()
+    val data0: () -> Unit = { object1.showMessage() }
+    Loock.get().showMessage()
+    Loock.get().showMessage()
+    Loock.get().showMessage()
+    Loock.get().showMessage()
+    Loock.get().showMessage()
+
+    val runnable = Thread {
+        Loock.get().showMessage()
+    }
+    val runnable1 = Thread {
+        Loock.get().showMessage()
+    }
+    val runnable2 = Thread {
+        Loock.get().showMessage()
+    }
+    val runnable3 = Thread {
+        Thread.sleep(100)
+        Loock.get().showMessage()
+    }
+    val runnable4 = Thread {
+        Loock.get().showMessage()
+    }
+    val runnable5 = Thread {
+        Loock.get().showMessage()
+    }
+    runnable5.start()
+    runnable1.start()
+    runnable4.start()
+    runnable2.start()
+    runnable3.start()
+    data0.invoke()
+    runnable.start()
 }

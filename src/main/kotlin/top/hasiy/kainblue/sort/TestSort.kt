@@ -1,4 +1,4 @@
-package sort
+package top.hasiy.kainblue.sort
 
 import java.util.*
 

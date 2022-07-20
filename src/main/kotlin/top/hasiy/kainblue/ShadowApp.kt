@@ -1,7 +1,7 @@
-package com.leqi.institute.view.activity
+package top.hasiy.kainblue
 
 object ShadowApp {
-    internal var x: Int = 0
+    private var x: Int = 0
     @JvmStatic
     fun main(args: Array<String>) {
         x = 5

@@ -1,5 +1,6 @@
 package top.hasiy.kainblue;
 
+//静态内部类写法
 public class SingleObjectJava {
     //创建 SingleObject 的一个对象
     private static SingleObjectJava instance = new SingleObjectJava();

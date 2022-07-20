@@ -28,3 +28,14 @@ object SingletonKotlin {
     }
 
 }//私有构造函数
+
+
+//静态内部类写法
+class Config private constructor(){
+    companion object{
+        fun getInstance = Helper.instance
+    }
+    private object Helper{
+        val instance = Config()
+    }
+}

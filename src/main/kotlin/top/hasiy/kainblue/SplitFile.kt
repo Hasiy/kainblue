@@ -1,4 +1,4 @@
-package top.hasiy.kainblue.programalgrithm
+package top.hasiy.kainblue
 
 
 /**

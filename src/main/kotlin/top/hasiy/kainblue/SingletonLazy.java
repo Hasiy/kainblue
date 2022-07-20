@@ -1,7 +1,5 @@
 package top.hasiy.kainblue;
 
-import java.lang.reflect.Constructor;
-
 //懒汉 用静态内部类实现单例模式
 /*
 1.从外部无法访问静态内部类LazyHolder，
