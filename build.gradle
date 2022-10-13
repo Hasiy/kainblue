@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.kotlin.jvm' version '1.3.72'
+    id 'org.jetbrains.kotlin.jvm' version '1.6.0'
 }
 
 group 'top.hasiy.kainblue'
@@ -32,10 +32,10 @@ configurations {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    implementation 'com.alibaba:fastjson:1.2.57'
-    implementation 'com.google.code.gson:gson:2.8.5'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.16'
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1-native-mt"
+    implementation 'com.alibaba:fastjson:2.0.14'
+    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3-native-mt'
 }
 
 compileKotlin {

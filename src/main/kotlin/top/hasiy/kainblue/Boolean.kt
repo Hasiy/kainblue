@@ -1,3 +1,5 @@
+package top.hasiy.kainblue
+
 /**
  * @Author: hasiy
  * @Date: 2019/11/19 - 10 : 10
@@ -30,7 +32,7 @@ fun BooleanExt.otherwise(block: () -> Unit) = when (this) {
 }
 
 
-fun main(args: Array<String>) {
+fun main() {
     val numberList: List<Int> = listOf(1, 2, 3)
     //使用定义好的扩展
     (numberList.size == 3).yes {

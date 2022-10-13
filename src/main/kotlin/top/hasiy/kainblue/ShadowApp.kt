@@ -1,4 +1,4 @@
-
+package top.hasiy.kainblue
 object ShadowApp {
     private var x: Int = 0
     fun main(args: Array<String>) {
@@ -7,6 +7,6 @@ object ShadowApp {
         val x: Int
         x = 10
         println("x = $x")
-        println("ShadowApp.x = " + ShadowApp.x)
+        println("top.hasiy.kainblue.ShadowApp.x = " + ShadowApp.x)
     }
 }

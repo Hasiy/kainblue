@@ -1,3 +1,5 @@
+package top.hasiy.kainblue
+
 import com.google.gson.Gson
 import java.math.RoundingMode
 import java.text.DecimalFormat

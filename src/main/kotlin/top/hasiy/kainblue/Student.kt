@@ -1,4 +1,4 @@
-import com.google.gson.annotations.Expose
+package top.hasiy.kainblue
 
 /*
  * @Author: hasiy
@@ -12,6 +12,6 @@ import com.google.gson.annotations.Expose
 data class Student(override var id: Int, override var name: String, override var age: Int, var cls: String) :
     Person(id, name, age) {
     override fun toString(): String {
-        return "Student:(id=$id, name='$name', age=$age , cls='$cls')"
+        return "top.hasiy.kainblue.Student:(id=$id, name='$name', age=$age , cls='$cls')"
     }
 }

@@ -1,8 +1,5 @@
 package top.hasiy.kainblue
 
-import otherwise
-import yes
-
 
 /**
  * @Author: hasiy
@@ -33,7 +30,7 @@ inline fun <T> BooleanExt1<T>.otherwise(block: () -> T): T = when (this) {
         this.data
 }
 
-fun main(args: Array<String>) {
+fun main() {
     val numberList: List<Int> = listOf(1, 2, 3)
     //使用定义好的扩展
     (numberList.size == 2).yes {

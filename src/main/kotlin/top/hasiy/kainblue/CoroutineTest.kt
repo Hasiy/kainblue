@@ -1,3 +1,5 @@
+package top.hasiy.kainblue
+
 import kotlinx.coroutines.*
 import java.util.*
 

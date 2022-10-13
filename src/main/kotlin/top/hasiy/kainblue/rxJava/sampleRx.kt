@@ -1,12 +1,12 @@
-package rxJava
+package top.hasiy.kainblue.rxJava
 
 import io.reactivex.*
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import org.reactivestreams.Subscription
-import top.hasiy.kainblue.rxJava.AnotherTask
-import top.hasiy.kainblue.rxJava.SomeTask
+import rxJava.AnotherTask
+import rxJava.SomeTask
 import java.util.*
 import java.util.concurrent.Callable
 import java.util.concurrent.TimeUnit

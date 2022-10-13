@@ -1,6 +1,7 @@
+package top.hasiy.kainblue
+
 import com.alibaba.fastjson.JSONObject
 import com.google.gson.Gson
-import top.hasiy.kainblue.SingleObject
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.stream.Collectors
@@ -181,10 +182,10 @@ fun main() {
 
     fun getStringLength(obj: Any) {
         if (obj is String) {
-            println("obj.length:${obj::class.java}")
-            println("obj.length:${obj.length}")
+            println("obj.top.hasiy.kainblue.length:${obj::class.java}")
+            println("obj.top.hasiy.kainblue.length:${obj.length}")
         }
-        println("obj.length:${obj::class.java}")
+        println("obj.top.hasiy.kainblue.length:${obj::class.java}")
     }
 
     getStringLength(1)
