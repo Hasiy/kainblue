@@ -2,8 +2,8 @@ package top.hasiy.kainblue;
 
 //https://zhuanlan.zhihu.com/p/33102022
 //懒汉
- class Singleton1 {
-    private Singleton1() {
+ class Singleton {
+    private Singleton() {
     }  //私有构造函数
 
 //    private static Singleton instance = null;  //单例对象
@@ -46,14 +46,14 @@ package top.hasiy.kainblue;
     //memory =allocate(); //1：分配对象的内存空间
     // ctorInstance(memory); //2：初始化对象
     // instance =memory; //3：设置instance指向刚分配的内存地址
-    private volatile static Singleton1 instance = null;  //单例对象
+    private volatile static Singleton instance = null;  //单例对象
 
     //静态工厂方法
-    public static Singleton1 getInstance() {
+    public static Singleton getInstance() {
         if (instance == null) {      //双重检测机制
-            synchronized (Singleton1.class) {  //同步锁
+            synchronized (Singleton.class) {  //同步锁
                 if (instance == null) {     //双重检测机制
-                    instance = new Singleton1();
+                    instance = new Singleton();
                 }
             }
         }

@@ -7,15 +7,15 @@ package top.hasiy.kainblue;
 2.INSTANCE对象初始化的时机并不是在单例类Singleton被加载的时候，而是在调用getInstance方法，
 * 使得静态内部类LazyHolder被加载的时候。因此这种实现方式是利用classloader的加载机制来实现懒加载，
 * 并保证构建单例的线程安全。*/
- class SingletonLazy1 {
+ class SingletonLazy{
     private static class LazyHolder {
-        private static final SingletonLazy1 INSTANCE = new SingletonLazy1();
+        private static final SingletonLazy INSTANCE = new SingletonLazy();
     }
 
-    private SingletonLazy1() {
+    private SingletonLazy() {
     }
 
-    public static SingletonLazy1 getInstance() {
+    public static SingletonLazy getInstance() {
         return LazyHolder.INSTANCE;
     }
 
